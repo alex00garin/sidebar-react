@@ -18,11 +18,12 @@
   font-weight: 200;
   font-size: 12px;
   display: flex;
+  width: 70px;
   height: 98vh;
   flex-direction: column;
   border-radius: 10px;
   background-color: var(--dark);
-  box-shadow: 2px 0px 10px 0px rgba(0, 0, 0, 0.25);
+  box-shadow: 5px 0px 10px 0px rgba(0, 0, 0, 0.5);
   position: sticky;
   color: var(--light);
   text-align: center;
@@ -79,4 +80,68 @@ p {
   margin-top: auto;
   margin-bottom: 2vh;
   margin-left: 12px;
+  transition: fill 0.8s ease-out;
+  text-decoration: none;
+  cursor: pointer;
+  /* padding: 15px 20px; */
+}
+
+@media screen and (max-width: 900px) {
+
+.top-sidebar {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  place-items: center;
+  text-align: center;
+  justify-content: space-between;
+  background-color: var(--dark);
+  box-shadow: 10px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  position: sticky;
+  color: var(--light);
+  transition: width 0.5s ease-out, opacity 0.5s ease-in;
+  justify-content: space-between;
+  height: 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.menu-link {
+  display: none;
+}
+
+.menu-link a p {
+  display: none;
+}
+
+.menu-link a {
+  padding: 20px;
+}
+
+.menu-link a svg {
+  height: 30px;
+  width: 30px;
+}
+
+.toggle {
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 10px;
+  width: 35px;
+  height: auto;
+
+}
+
+.toggle p {
+  display: none;
+}
+
+#menu-btn {
+  display: none;
+}
+button {
+  display: none;
+}
+
 }

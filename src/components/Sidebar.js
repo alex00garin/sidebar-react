@@ -1,28 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Link } from 'react-router-dom';
 import '../components/Sidebar.css';
+import ThemeToggle from '../components/ThemeToggle.js';
 
 function Sidebar() {
   const [isMenuOpen, setIsMenuOpen] = useState(true);
   const [sidebarWidth, setSidebarWidth] = useState('70px');
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 900);
 
   const handleMenuClick = () => {
     setIsMenuOpen(!isMenuOpen);
     setSidebarWidth(isMenuOpen ? '180px' : '70px');
   };
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 900);
+    };
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Call it initially
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   return (
     <Router>
-    <div className="sidebar" style={{ width: sidebarWidth }}>
+      <div className={`sidebar ${isSmallScreen ? 'top-sidebar' : ''}`} style={{ width: isSmallScreen ? '100%' : sidebarWidth }}>
       <div className='menu-link' style={{ display: 'flex', alignItems: 'center' }}>
-        <Link to="#" onClick={handleMenuClick}>
+        <Link id='menu-btn' to="#" onClick={handleMenuClick}>
           <button>
             {isMenuOpen ? (
-              <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="30">
+              <svg id='menu-btn' xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="30">
                 <path d="M146-278v-22h668v22H146Zm0-191v-22h668v22H146Zm0-191v-22h668v22H146Z"/>
               </svg>
             ) : (
-              <svg xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="30">
+              <svg id='menu-btn' xmlns="http://www.w3.org/2000/svg" height="30" viewBox="0 -960 960 960" width="30">
                 <path d="m254-238-16-16 226-226-226-226 16-16 226 226 226-226 16 16-226 226 226 226-16 16-226-226-226 226Z"/>
               </svg>
             )}
@@ -64,16 +79,8 @@ function Sidebar() {
           <p style={{ display: isMenuOpen ? 'none' : 'block' }}>CONTACT</p>
         </Link>
       </div>
-
-      <div className='toggle' style={{ display: 'flex' }}>        
-        <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48">
-          <path d="M280-292q-78.333 0-133.167-54.765Q92-401.529 92-479.765 92-558 146.833-613 201.667-668 280-668h400q78.333 0 133.167 54.765Q868-558.471 868-480.235 868-402 813.167-347 758.333-292 680-292H280Zm0-22h400q69.225 0 117.612-48.341Q846-410.681 846-479.841 846-549 797.612-597.5 749.225-646 680-646H280q-69.225 0-117.613 48.341Q114-549.319 114-480.159 114-411 162.387-362.5 210.775-314 280-314Zm-.059-78Q317-392 342.5-417.324q25.5-25.323 25.5-62.5Q368-517 342.676-542.5 317.353-568 280.294-568t-63.176 25.323Q191-517.353 191-480.176 191-443 216.941-417.5t63 25.5ZM480-480Z"/>
-        </svg>
-
-        <svg style={{ display: 'none' }} xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48">
-          <path d="M280-292q-78.333 0-133.167-54.765Q92-401.529 92-479.765 92-558 146.833-613 201.667-668 280-668h400q78.333 0 133.167 54.765Q868-558.471 868-480.235 868-402 813.167-347 758.333-292 680-292H280Zm0-22h400q69.225 0 117.612-48.341Q846-410.681 846-479.841 846-549 797.612-597.5 749.225-646 680-646H280q-69.225 0-117.613 48.341Q114-549.319 114-480.159 114-411 162.387-362.5 210.775-314 280-314Zm399.706-78q37.059 0 63.176-25.324Q769-442.647 769-479.824 769-517 743.059-542.5t-63-25.5Q643-568 617.5-542.677 592-517.353 592-480.176 592-443 617.323-417.5q25.324 25.5 62.383 25.5ZM480-480Z"/>
-        </svg>
-      </div>
+      
+      <ThemeToggle />
 
     </div>
     </Router>
